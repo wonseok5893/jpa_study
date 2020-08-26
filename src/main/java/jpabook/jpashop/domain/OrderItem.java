@@ -1,12 +1,17 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.*;
 
 @Entity
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)//생성자 생성 막는 방법
 public class OrderItem {
 
     @Id
@@ -25,4 +30,29 @@ public class OrderItem {
     private int orderPrice; //주문 가격
 
     private int count;//주문 수량
+    // 생성 메서드 //
+
+
+
+    public static OrderItem createOrderItem(Item item , int orderPrice, int count){
+        OrderItem orderItem= new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+    //비즈니스 로직
+    public void cancel() {
+        this.getItem().addstock(count);
+
+    }
+    
+    
+    //조회 로직
+    public int getTotalPrice() {
+        return getOrderPrice()*getCount();
+    }
 }
