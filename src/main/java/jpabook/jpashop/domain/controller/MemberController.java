@@ -6,6 +6,7 @@ import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,10 @@ public class MemberController {
 
 
     @PostMapping("/members/new")
-    public String create(@Valid MemberForm form){
+    public String create(@Valid MemberForm form, BindingResult result){
+        if (result.hasErrors()) {
+            return "members/createMemberForm";
+        }
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
         Member member = new Member();
         member.setName(form.getName());
@@ -43,7 +47,7 @@ public class MemberController {
     public String memberList(Model model){
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
-        return  "members/memberList";
+        return "members/memberList";
 
     }
 }
