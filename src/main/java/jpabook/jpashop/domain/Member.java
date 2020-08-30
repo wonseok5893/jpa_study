@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.websocket.server.ServerEndpoint;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Member {
     private Long id;
 
     private String name;
+
     @Embedded
     private Address address;
 
