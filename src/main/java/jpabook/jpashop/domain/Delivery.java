@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Delivery {
     @Id @GeneratedValue
     @Column(name = "delivery_id")
     private Long id;
+
 
     @OneToOne(mappedBy = "delivery", fetch = LAZY)
     private Order order;
