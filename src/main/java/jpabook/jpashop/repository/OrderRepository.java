@@ -17,7 +17,7 @@ public class OrderRepository {
 
     private final EntityManager em;
 
-    public void save(Order order){
+    public void save(Order order) {
         em.persist(order);
     }
 
@@ -49,12 +49,13 @@ public class OrderRepository {
             }
             jpql += " m.name like :name";
         }
-        TypedQuery<Order> query = em.createQuery(jpql,Order.class)
+        TypedQuery<Order> query = em.createQuery(jpql, Order.class)
                 .setMaxResults(1000);
-        if(orderSearch.getOrderStatus()!=null)
-        {query = query.setParameter("status",orderSearch.getOrderStatus());}
-        if(StringUtils.hasText(orderSearch.getMemberName())){
-            query = query.setParameter("name",orderSearch.getMemberName());
+        if (orderSearch.getOrderStatus() != null) {
+            query = query.setParameter("status", orderSearch.getOrderStatus());
+        }
+        if (StringUtils.hasText(orderSearch.getMemberName())) {
+            query = query.setParameter("name", orderSearch.getMemberName());
         }
         return query.getResultList();
     }
@@ -67,19 +68,25 @@ public class OrderRepository {
     }
 
     public List<OrderSimpleQueryDto> findOrderDtos() {
-        return em.createQuery("select new jpabook.jpashop.repository.orderqueryRepository.OrderSimpleQueryDto(o.id, m.name, o.orderDate ,o.status, d.address)  from Order o"+
-                " join o.member m"+
+        return em.createQuery("select new jpabook.jpashop.repository.orderqueryRepository.OrderSimpleQueryDto(o.id, m.name, o.orderDate ,o.status, d.address)  from Order o" +
+                " join o.member m" +
                 " join o.delivery d", OrderSimpleQueryDto.class).getResultList();
     }
 
     public List<Order> findAllWithItem() {
         return em.createQuery(
-                "select distinct o from Order o"+
-                " join fetch o.member m"+
-                " join fetch o.delivery d"+
-                " join fetch o.orderItems oi" +
-                " join fetch oi.item i", Order.class)
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .setFirstResult(1)
+                .setMaxResults(100)
                 .getResultList();
-    //db에 distinct 와는 다르다. entity 식별자로 distinct 한다
+        //db에 distinct 와는 다르다.
+        // entity 식별자로 distinct 한다
+        // 단점! 페이징 불가능!!!
+        // 해주는데 WARN 메모리에서 해준다
+        //컬렉션 둘이상의 페치조인은 사용하면 안된다.
     }
 }
