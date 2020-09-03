@@ -1,6 +1,6 @@
 # JPA Study
 
-##Stack
+## Stack
 |||
 |------|---|
 |Back-end|Spring Boot 3.3|
@@ -11,15 +11,17 @@
 | template engine |  Thymeleaf|
 
 
-##목적
+## 목적
 1. Entity 와 RDBMS 연관관계 매핑
 2. JPA의 성능 문제 해결  
     (1) 지연로딩 LAZY_MODE  
     (2) fetch join  
 3. 웹 계층과 도메인 계층 분리
     (1) DTO or 새로운 클래스를 이용한 API 스펙 변경시 유지보수 용이
-
+4. 엔티티 직접 노출 x
+    (1) Dto로 변환!!
+    (2) 생성자 호출시 property에러 -> getter 확인 
 -- --
-###다음 목표
+### 다음 목표
 * spring-data-jpa
 * Querydsl

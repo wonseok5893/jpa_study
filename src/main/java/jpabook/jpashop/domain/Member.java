@@ -24,6 +24,7 @@ public class Member {
 
 
     //@JsonIgnore api에서 제외
+    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 }
