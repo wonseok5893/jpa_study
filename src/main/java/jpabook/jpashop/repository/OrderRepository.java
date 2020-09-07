@@ -80,13 +80,18 @@ public class OrderRepository {
                         " join fetch o.delivery d" +
                         " join fetch o.orderItems oi" +
                         " join fetch oi.item i", Order.class)
-                .setFirstResult(1)
-                .setMaxResults(100)
+                // .setFirstResult(1)
+                // .setMaxResults(100)
                 .getResultList();
         //db에 distinct 와는 다르다.
         // entity 식별자로 distinct 한다
         // 단점! 페이징 불가능!!!
         // 해주는데 WARN 메모리에서 해준다
         //컬렉션 둘이상의 페치조인은 사용하면 안된다.
+
+        /* v3 과 v3.1은 쿼리를 찍어보면 v3은 데이터 중복이 많다 1대 N이라
+         * 1이 모두 중복 , 데이터가 많이 없으면 v3이 낫고 많으면 v3.1이
+         * 더 나을수도 있음음*/
     }
+
 }
