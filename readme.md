@@ -30,3 +30,4 @@
 ### 다음 목표
 * spring-data-jpa
 * Querydsl
+* ecache
